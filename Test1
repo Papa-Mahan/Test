@@ -1,0 +1,45 @@
+import threading
+
+import requests
+
+ 
+
+api_url = 'https://api.minelead.io/v1/search/?'
+
+ 
+
+api_key = '<Your Api Key Goes Here>'
+
+ 
+
+domains = ['google.com','amazon.com','tesla.com','minelead.io']
+
+
+ 
+
+def get_data(domain):
+
+    response = requests.get(f'{api_url}domain={domain}&key={api_key}').json()
+
+    print(response)
+
+
+ 
+
+threads = []
+
+for domain in domains:
+
+    thread = threading.Thread(target=get_data, args=(domain,))
+
+    thread.start()
+
+    threads.append(thread)
+
+ 
+
+for thread in threads:
+
+    thread.join()
+
+ 
